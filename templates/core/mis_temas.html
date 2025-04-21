@@ -1,0 +1,30 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-white">📋 Mis Temas Publicados</h2>
+
+  <ul class="list-group mt-4">
+    {% for tema in temas %}
+      <li class="list-group-item bg-dark text-white">
+        <h5 class="mb-1">{{ tema.titulo }}</h5>
+        <p class="mb-2">{{ tema.contenido|truncatewords:20 }}</p>
+        <small>
+          🕒 {{ tema.fecha_creacion|date:"d/m/Y H:i" }} | 
+          📁 Sección: <strong>{{ tema.seccion.nombre }}</strong>
+        </small>
+        <div class="mt-2">
+          <a href="{% url 'comentar_tema' tema.id %}" class="btn btn-outline-light btn-sm">💬 Comentar</a>
+          <a href="{% url 'valorar_tema' tema.id %}" class="btn btn-outline-info btn-sm">⭐ Valorar</a>
+        </div>
+      </li>
+    {% empty %}
+      <li class="list-group-item bg-secondary text-white">❗ No has creado ningún tema aún.</li>
+    {% endfor %}
+  </ul>
+
+  <div class="mt-4">
+    <a href="{% url 'lista_secciones' %}" class="btn btn-outline-secondary">⬅ Volver a Secciones</a>
+  </div>
+</div>
+{% endblock %}

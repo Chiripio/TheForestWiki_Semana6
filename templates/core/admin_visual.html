@@ -1,0 +1,128 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-warning text-center">Panel de Administración</h2>
+  <p class="text-center text-light">Desde aquí puedes gestionar secciones, temas y comentarios.</p>
+
+  <!-- FORMULARIO: CREAR SECCIÓN -->
+  <div class="card bg-dark text-white mt-4">
+    <div class="card-header text-warning">Crear nueva sección del foro</div>
+    <div class="card-body">
+      <form method="post" action="{% url 'admin_visual' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="nombre" class="form-label text-white">Nombre</label>
+          <input type="text" class="form-control bg-dark text-white" id="nombre" name="nombre" required>
+        </div>
+        <div class="mb-3">
+          <label for="descripcion" class="form-label text-white">Descripción (opcional)</label>
+          <input type="text" class="form-control bg-dark text-white" id="descripcion" name="descripcion">
+        </div>
+        <button type="submit" class="btn btn-warning w-100">Crear Sección</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- LISTADO DE SECCIONES -->
+  {% for seccion in secciones %}
+    <div class="card mt-4 bg-dark text-white">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+          <h4 class="text-info mb-0">Sección: {{ seccion.nombre }}</h4>
+          {% if seccion.descripcion %}<small>{{ seccion.descripcion }}</small>{% endif %}
+        </div>
+        <form method="post" action="{% url 'eliminar_seccion' seccion.id %}" onsubmit="return confirm('¿Estás seguro de eliminar esta sección?');">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+        </form>
+      </div>
+      <div class="card-body">
+        <h5 class="text-warning">Temas:</h5>
+        <ul class="list-group mb-3">
+          {% for tema in seccion.tema_set.all %}
+            <li class="list-group-item bg-secondary text-white">
+              <strong>{{ tema.titulo }}</strong> - {{ tema.usuario.username }} - {{ tema.fecha_creacion|date:"d/m/Y H:i" }}
+              {% if tema.activo %}
+                <span class="badge bg-success">Activo</span>
+              {% else %}
+                <span class="badge bg-danger">Baneado</span>
+              {% endif %}
+              <div class="mt-2">
+                {% if tema.id_tema %}
+                  {% if request.user.username == tema.usuario.username or request.user.rol.nombre == 'Administrador' %}
+                    <form method="post" action="{% url 'eliminar_tema' tema.id_tema %}" class="d-inline me-2">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Eliminar este tema?');">🗑️ Eliminar</button>
+                    </form>
+                  {% endif %}
+                  <form method="post" action="{% url 'banear_tema' tema.id_tema %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-warning">
+                      {% if tema.activo %}🚫 Banear{% else %}✅ Desbanear{% endif %}
+                    </button>
+                  </form>
+                {% endif %}
+              </div>
+            </li>
+          {% empty %}
+            <li class="list-group-item text-white bg-dark">No hay temas en esta sección.</li>
+          {% endfor %}
+        </ul>
+
+        <h5 class="text-warning mt-4">Comentarios:</h5>
+        <ul class="list-group">
+          {% for comentario in comentarios %}
+            {% if comentario.tema and comentario.tema.seccion.id == seccion.id %}
+              <li class="list-group-item bg-secondary text-white">
+                {{ comentario.usuario.username }} dijo: "{{ comentario.contenido }}" en <strong>{{ comentario.tema.titulo }}</strong>
+                {% if comentario.activo %}
+                  <span class="badge bg-success">Activo</span>
+                {% else %}
+                  <span class="badge bg-danger">Baneado</span>
+                {% endif %}
+                <div class="mt-2">
+                  {% if comentario.id %}
+                    {% if request.user.username == comentario.usuario.username or request.user.rol.nombre == 'Administrador' %}
+                      <form method="post" action="{% url 'eliminar_comentario' comentario.id %}" class="d-inline me-2">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Eliminar este comentario?');">🗑️ Eliminar</button>
+                      </form>
+                      <form method="post" action="{% url 'banear_comentario' comentario.id %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-warning">
+                          {% if comentario.activo %}🚫 Banear{% else %}✅ Desbanear{% endif %}
+                        </button>
+                      </form>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </li>
+            {% endif %}
+          {% empty %}
+            <li class="list-group-item text-white bg-dark">No hay comentarios en esta sección.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  {% endfor %}
+
+  <div class="text-center mt-4">
+    <a href="{% url 'menuprincipal' %}" class="btn btn-outline-light">Volver al inicio</a>
+  </div>
+</div>
+
+<!-- SweetAlert2 -->
+{% if messages %}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    {% for message in messages %}
+      Swal.fire({
+        icon: `{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% elif message.tags == 'warning' %}warning{% else %}info{% endif %}`,
+        title: `{{ message|escapejs }}`,
+        confirmButtonColor: '#ffc400'
+      });
+    {% endfor %}
+  </script>
+{% endif %}
+{% endblock %}

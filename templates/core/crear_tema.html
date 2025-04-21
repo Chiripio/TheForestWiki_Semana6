@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-white">📝 Crear nuevo tema</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.titulo.label_tag }}
+            {{ form.titulo }}
+        </div>
+        <div class="mb-3">
+            {{ form.contenido.label_tag }}
+            {{ form.contenido }}
+        </div>
+        <div class="mb-3">
+            {{ form.seccion.label_tag }}
+            {% if form.seccion.field.queryset %}
+                {{ form.seccion }}
+            {% else %}
+                <p class="text-warning">⚠️ No hay secciones disponibles. Crea una sección primero.</p>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Publicar tema</button>
+        <a href="{% url 'lista_secciones' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

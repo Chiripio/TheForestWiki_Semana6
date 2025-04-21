@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ubicación - The Forest Wiki</title>
+  <link rel="shortcut icon" href="{% static 'imagenes/Icono/the-forest.icon.png' %}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+</head>
+
+<!--js del clima-->
+<script src="{% static 'js/clima.js' %}"></script>
+
+<body style="background-color: #000; color: #fff;">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="{% url 'menuprincipal' %}" id="fuente">THE FOREST WIKI</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item"><a class="nav-link" href="{% url 'menuprincipal' %}">Inicio</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'foro' %}">Foro</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'historia' %}">Historia</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'logros' %}">Logros</a></li>
+      <li class="nav-item"><a class="nav-link active" href="{% url 'direccion' %}">Dirección</a></li>
+
+      {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link text-warning" href="{% url 'micuenta' %}">Mi Cuenta ({{ request.user.username }})</a>
+        </li>
+        {% if request.user.rol.nombre == 'Administrador' %}
+          <li class="nav-item">
+            <a class="nav-link text-info" href="{% url 'admin_visual' %}">Admin</a>
+          </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+        </li>
+      {% else %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'registrarse' %}">Registrarse</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a></li>
+      {% endif %}
+    </ul>
+
+    <form class="d-flex" id="separarsearch">
+      <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+      <button class="btn btn-outline-success" type="submit">Buscar</button>
+
+       <!-- Clima dinámico -->
+        <div id="clima-widget" class="text-white" style="font-size: 0.9rem;">
+          <span id="clima-ciudad">🌤️ Clima:</span> <span id="clima">Cargando...</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+
+<!-- CONTENIDO PRINCIPAL -->
+<div class="container mt-5 text-center">
+  <h2 class="text-warning mb-4">Nuestra Ubicación</h2>
+  <div class="ratio ratio-16x9">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3331.7732021389286!2d-70.75338!3d-33.3296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662dc6ad3fd9fcf%3A0x21c7ebadfd798f52!2sR%C3%ADo%20Imperial%20460%2C%20Valle%20Grande%2C%20Lampa%2C%20Regi%C3%B3n%20Metropolitana!5e0!3m2!1ses-419!2scl!4v1686783223929!5m2!1ses-419!2scl"
+      width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+    </iframe>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="text-center text-muted mt-5" id="piedepag">
+  <hr style="background-color: gray;">
+  <p>Chile, Santiago de Chile | Fono: 227369936 | Email: tfwiki@gmail.com</p>
+  <p>&copy; 2022 Wiki <span style="color: #ffc400;">THE FOREST WIKI</span></p>
+</footer>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

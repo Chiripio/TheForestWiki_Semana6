@@ -1,0 +1,107 @@
+/* Ninguna de las imágenes son de mi propiedad, a continuación están los links de los autores:
+Imágenes en Unsplash: https://unsplash.com/@xps
+Logo Dell: https://worldvectorlogo.com/logo/dell-1
+*/
+
+:root {
+    --dark: #16191C;
+    --dark-x: #1E2126;
+    --light: #ffffff;
+    --rojo: #ffc400;
+    --fondo: #1414148c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Spartan', sans-serif;
+    font-weight: 300;
+    color: var(--light);
+}
+
+#subir {
+    margin-top: 20px;
+}
+
+.button {
+    background-color: #2b97fd;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.text-light { color: var(--light) !important; }
+.bg-dark { background-color: var(--dark) !important; }
+.bg-dark-x { background-color: var(--dark-x); }
+
+.btn {
+    min-height: 3.125rem;
+    font-weight: 600;
+}
+
+.form-control {
+    min-height: 3.125rem;
+    line-height: initial;
+}
+
+.form-control:focus {
+    background-color: var(--dark-x);
+    outline: none;
+}
+
+.img-1 {
+    background-image: url("/static/img_wiki/fondo_theforest.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.img-2 {
+    background-image: url("/static/img_wiki/Fondo3.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+footer {
+    background-color: rgba(26, 25, 25, 0.664);
+    color: white;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#fuente {
+    color: var(--rojo);
+    font-family: 'Bebas Neue', cursive;
+    font-size: 30px;
+    padding-left: 20px;
+}
+
+#piedepag {
+    font-family: 'Bebas Neue', cursive;
+    color: var(--rojo);
+    font-size: 20px;
+}
+
+nav {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 22px;
+    color: var(--rojo);
+}
+
+#separarsearch {
+    padding-right: 20px;
+}

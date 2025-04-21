@@ -1,0 +1,19 @@
+# Ignorar entorno virtual
+venv/
+
+# Ignorar carpetas del wallet Oracle
+oracle_wallet/
+oracle_wallet_min/
+oracle_wallet_full/
+
+# Ignorar archivos pesados
+*.dylib
+*.p12
+*.sso
+*.jar
+*.zip
+*.sh
+
+# Archivos innecesarios
+.DS_Store
+*.log

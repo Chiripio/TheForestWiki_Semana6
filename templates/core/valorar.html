@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-white">⭐ Valorar tema: <span class="text-info">{{ tema.titulo }}</span></h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.valor.label_tag }}
+            {{ form.valor }}
+        </div>
+        <button type="submit" class="btn btn-warning">Enviar valoración</button>
+        <a href="{% url 'temas_por_seccion' tema.seccion.id %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,429 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{% static 'imagenes/Icono/the-forest.icon.png' %}" />
+  <title>Armas - The Forest Wiki</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/Armas.css' %}" />
+</head>
+
+
+    <!--js del clima-->
+    <script src="{% static 'js/clima.js' %}"></script>
+
+
+<body id="fondo">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'menuprincipal' %}" id="fuente">The Forest Wiki</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="{% url 'menuprincipal' %}">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'foro' %}">Foro</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'historia' %}">Historia</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'logros' %}">Logros</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'direccion' %}">Dirección</a></li>
+
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link text-warning" href="{% url 'micuenta' %}">Mi Cuenta ({{ request.user.username }})</a>
+          </li>
+          {% if request.user.rol.nombre == 'Administrador' %}
+            <li class="nav-item">
+              <a class="nav-link text-info" href="{% url 'admin_visual' %}">Admin</a>
+            </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+          </li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'registrarse' %}">Registrarse</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a></li>
+        {% endif %}
+      </ul>
+
+      <form class="d-flex" id="separar-derecha">
+        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+
+         <!-- Clima dinámico -->
+         <div id="clima-widget" class="text-white" style="font-size: 0.9rem;">
+            <span id="clima-ciudad">🌤️ Clima:</span> <span id="clima">Cargando...</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+  <!-- Contenido principal -->
+  <section class="colorl">
+    <div class="letra">
+      <div class="container">
+        <div class="center-titulo">
+          <h1 id="titulo">Armas</h1>
+        </div>
+        {% if request.user.is_authenticated and request.user.rol.nombre == 'Administrador' %}
+        <div class="w-33">
+          <div class="center">
+            <button class="btn btn-dark">Editar</button>
+          </div>
+        </div>
+        {% endif %}
+        <div class="center">
+          <p id="caja_bienvenida">
+            Dentro del juego existen muchas armas tanto a distancia como cuerpo a cuerpo, algunas de ellas siendo herramientas que puedes ocupar para matar, construir, escalar, obtener comida, etc.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla de armas -->
+    {% comment %} Aquí va todo el contenido que ya tienes de la tabla de armas (rows con armas, imágenes y descripciones) {% endcomment %}
+  </section>
+
+  <!-- Footer -->
+  <footer id="piedepag" class="bg-dark text-white text-center py-3">
+    <p>Chile, Santiago de Chile | Fono: 227369936 | Email: tfwiki@gmail.com</p>
+    <p>&copy; 2022 Wiki <span style="color: #ffc400;">THE FOREST WIKI</span></p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  
+          </form>
+        </div>
+      </nav>
+
+    <section class="colorl">
+        <div class="letra">
+            <div class="container">
+                <div class="center-titulo">
+                    <h1 id="titulo">Armas</h1>
+                </div>
+                {% if request.user.is_authenticated and request.user.rol.nombre == 'Administrador' %}
+                <div class="w-33">
+                  <div class="center">
+                    <button class="btn btn-dark">Editar</button>
+                  </div>
+                </div>
+                {% endif %}
+
+                <div class="center">
+                    <p id="caja_bienvenida">
+                        Dentro del juego existen muchas armas tanto a distancia como cuerpo a cuerpo, algunas de ellas
+                        siendo <br> herramientas que puedes ocupar para matar, construir, escalar, obtener comida, etc.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        <div class="container text-fluid">
+            <div class="d-block d-sm-block d-md-none">
+                <h5 class="center margin-tabla">Orden de datos:</h5>
+                <p class="center">
+                    1er bloque = Numero<br>
+                    2do bloque = Imagen arma<br>
+                    3er bloque = Nombre arma<br>
+                    4to bloque = Tipo arma<br>
+                    5to bloque = Descripcion arma
+                </p>
+            </div>
+            <div class="margin-tabla">
+                <div class="row">
+                    <div class="d-none d-sm-none d-md-block col-sm-2 border border-secondary fondo-tabla center">
+                        <h5>Numero</h5>
+                    </div>
+                    <div class="d-none d-sm-none d-md-block col-sm-2 border border-secondary fondo-tabla center">
+                        <h5>Imagen arma</h5>
+                    </div>
+                    <div class="d-none d-sm-none d-md-block col-sm-2 border border-secondary fondo-tabla center">
+                        <h5>Nombre arma</h5>
+                    </div>
+                    <div class="d-none d-sm-none d-md-block col-sm-2 border border-secondary fondo-tabla center">
+                        <h5>tipo arma</h5>
+                    </div>
+                    <div class="d-none d-sm-none d-md-block col-sm-4 border border-secondary fondo-tabla center">
+                        <h5>Descripcion arma</h5>
+                    </div>
+                </div>
+                <div class="letra">
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>1</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/PlaneAxe.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Hacha de avión</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Melee</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>El hacha de avión es el primer arma que te encuentras en el juego ya que la encontrarás al salir del avión. Sirve para talar árboles, cazar e incluso combatir.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>2</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/CraftedAxe.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Hacha artesanal</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Melee</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Más lenta pero poderosa. Puede fabricarse fácilmente al inicio del juego con elementos comunes.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>3</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center separar-arriba">
+                            <p><img src="{% static 'imagenes/Armas/RustyAxe.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Hacha oxidada</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Melee</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Ofrece gran bloqueo y poder de derribo, pero es más lenta y causa menos daño.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>4</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/ModernAxe.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Hacha moderna</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Melee</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Excelente para cortar árboles y combate. Causa más daño que el hacha de avión, pero es un poco más lenta.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>5</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center separar-arriba">
+                            <p><img src="{% static 'imagenes/Armas/ClimbingAxe.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Pico de escalada</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Melee</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Útil para escalar cuevas y acantilados. Como arma, es rápida pero con daño bajo.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>6</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/Machete.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Machete</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Melee</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Rápido y útil para cortar arbustos. Su alcance es corto, pero sirve como arma ligera.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>7</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/Katana.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Katana</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Melee</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Arma rápida y elegante. Su velocidad permite golpear sin dar tiempo a contraataques, aunque con daño moderado.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>8</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/WeakSpear.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Lanza débil</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Melee<br>Distancia</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Fácil de fabricar y útil para cazar. Se puede lanzar, aunque con poco daño y velocidad moderada.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>9</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/UpgradedSpear.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Lanza mejorada</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Melee<br>Distancia</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Una gran mejora respecto a la débil. Buena para cazar, atacar y hacer "kiteo" por su capacidad de lanzar y moverse rápido.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>10</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/Chainsaw.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Motosierra</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Melee</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Una herramienta brutal para talar árboles y destruir enemigos rápidamente. Usa combustible y no requiere resistencia.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>11</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/CraftedBow.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Arco artesanal</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Distancia</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Dispara flechas sin mirilla ni zoom. Su uso requiere práctica, pero permite cazar o atacar desde lejos. Las flechas varían en daño según el tipo.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>12</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/TurtleShell.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Caparazón de tortuga</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Melee</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>No es un arma muy ofensiva, pero su poder de bloqueo es altísimo. Perfecta para defensa frente a mutantes y caníbales (excepto Cowman).</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>13</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/Club.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Mazo</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Melee</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Arma pesada saqueada de enemigos. Aunque lenta, causa gran daño y tiene muy buen bloqueo. Ideal para aguantar embestidas.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>14</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/Dynamite.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Dinamita</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Distancia</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Explosivo potente que destruye enemigos y estructuras. Muy eficaz pero debe usarse con cuidado para evitar daño propio.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>15</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p><img src="{% static 'imagenes/Armas/Molotov.webp' %}" alt="" class="imagen img-fluid"></p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p class="center-titulo">Molotov</p>
+                        </div>
+                        <div class="col-sm-2 border border-secondary fondo-tabla center">
+                            <p>Distancia</p>
+                        </div>
+                        <div class="col-sm-4 border border-secondary fondo-tabla center">
+                            <p>Se enciende y lanza, provocando un área en llamas que daña a cualquier enemigo que toque. Muy útil contra grupos de enemigos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer id="piedepag">
+            <p>Chile, Santiago de Chile | Fono: 227369936 | Email: tfwiki@gmail.com</p>
+            <p>Copyright 2022 Wiki <span style="color: #ffc400;">THE FOREST WIKI</span></p>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+                crossorigin="anonymous"></script>
+    </section>
+</body>
+</html>

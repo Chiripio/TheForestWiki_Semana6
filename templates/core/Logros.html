@@ -1,0 +1,563 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{% static 'imagenes/Icono/the-forest.icon.png' %}" />
+  <title>Logros - The Forest Wiki</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/Logros.css' %}">
+</head>
+
+<!--js del clima-->
+<script src="{% static 'js/clima.js' %}"></script>
+
+
+<body id="fondo">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'menuprincipal' %}" id="fuente">The Forest Wiki</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="{% url 'menuprincipal' %}">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'foro' %}">Foro</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'historia' %}">Historia</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'logros' %}">Logros</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'direccion' %}">Dirección</a></li>
+
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link text-warning" href="{% url 'micuenta' %}">Mi Cuenta ({{ request.user.username }})</a>
+          </li>
+          {% if request.user.rol.nombre == 'Administrador' %}
+            <li class="nav-item">
+              <a class="nav-link text-info" href="{% url 'admin_visual' %}">Admin</a>
+            </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+          </li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'registrarse' %}">Registrarse</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a></li>
+        {% endif %}
+      </ul>
+      <form class="d-flex" id="separar-derecha">
+        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+
+
+         <!-- Clima dinámico -->
+        <div id="clima-widget" class="text-white" style="font-size: 0.9rem;">
+          <span id="clima-ciudad">🌤️ Clima:</span> <span id="clima">Cargando...</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Título -->
+  <div class="container">
+    <div class="center-texto">
+      <h1 id="titulo">Logros</h1>
+    </div>
+  </div>
+
+
+
+  <section class="colorl">
+    <div class="letra">
+      <div class="w-33">
+        <div class="center">
+          <button class="btn btn-dark">
+            Editar
+          </button>
+        </div>
+      </div>
+      <div class="container">
+        <div class="center">
+          <p id="caja_bienvenida">
+            Los logros son aquellos "trofeos" que vas recolectando a medida que avanzas en el juego. Actualmente solo
+            existen 45 logros en total, los cuales 5 están ocultos. A continuación, te mostraremos estos mismos y su descripción.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container text-fluid">
+      <div class="d-block d-sm-block d-md-none">
+        <h5 class="center margin-tabla">Orden de datos:</h5>
+        <p class="center">1er bloque = Número logro<br>2do bloque = Imagen logro<br>3er bloque = Nombre logro<br>4to bloque = Descripción logro</p>
+      </div>
+      <div class="margin-tabla">
+        <div class="row">
+          <div class="d-none d-sm-none d-md-block col-sm-2 border border-secondary fondo-tabla center">
+            <h5>Número</h5>
+          </div>
+          <div class="d-none d-sm-none d-md-block col-sm-2 border border-secondary fondo-tabla center">
+            <h5>Imagen logro</h5>
+          </div>
+          <div class="d-none d-sm-none d-md-block col-sm-3 border border-secondary fondo-tabla center">
+            <h5>Nombre logro</h5>
+          </div>
+          <div class="d-none d-sm-none d-md-block col-sm-5 border border-secondary fondo-tabla center">
+            <h5>Descripción logro</h5>
+          </div>
+        </div>
+
+        <div class="letra">
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">1</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Be_Nice.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Sé bueno</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Comparte un artículo de comida o bebida en MP.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">2</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Be_Extremely_Nice.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Ser extremadamente agradable</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Comparte un arma en MP.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">3</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/First_Responder.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Primer respondedor</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Revive a un jugador cooperativo.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">4</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Medic.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Médico</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Revive a diez jugadores en modo cooperativo.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">5</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Camp_Out.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Acampar</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Dormir con otro jugador (dormir en grupo).</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">6</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Minor_Cannibalism.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Canibalismo menor</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Comer un enemigo.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">7</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Major_Cannibalism.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Canibalismo mayor</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Comer una familia entera.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">8</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Trophy_Hunter.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Cazador de trofeos</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-texto">Mata a todos los tipos de animales y cabezas de exhibición.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">9</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Splatter.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Salpicar</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Enemigo derribado asesinado con roca.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">10</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Choppy_Chop.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Chuleta picada</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Picar 50 cuerpos.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">11</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Commercial_Fisherman.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Pescador comercial</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Mata a 6 o más peces con un cartucho de dinamita.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">12</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Serial_Killer.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Asesino en serie</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Mata a 100 caníbales.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">13</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/bite_me.jpg' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">¡Muérdeme!</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Mata a un tiburón.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">14</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Monster.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Monstruo</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Mata a un conejo.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">15</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Birdseye.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Ojo de pájaro</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Mata a un pájaro con una flecha.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">16</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Fisherman.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Pescador</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Atrapa peces con una trampa.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">17</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Green_Thumb.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Pulgar verde</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Cultiva todo tipo de plantas.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">18</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Naturopath.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Naturópata</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Crea 10 artículos medicinales.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">19</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Gabe_Fan.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Fan de Gabe</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Recoge todas las cintas de casete.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">20</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Unseen.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Invisible</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Crea y usa una armadura sigilosa.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">21</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Longest_Wall.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Muro más largo</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Construye una pared súper larga.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">22</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Demolition_Man_.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Hombre de demolición</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Detonar 20 bombas.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">23</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Demolition_Expert.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Experto en demoliciones</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Derriba 6 o más árboles con 1 explosivo.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">24</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Boy_Scout.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Boy scout</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Usa la brújula.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">25</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Handyman.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Personal de mantenimiento</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Repara un refugio.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">26</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Climate_Change.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Cambio climático</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Corta 100 árboles.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">27</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/dont_save_the_forest.jpg' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">No salvemos el bosque</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Corta 1000 árboles.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">28</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Crafty.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Astuto</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Fabrica 26 artículos específicos.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">29</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Good_Father.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Buen padre</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Recoge todas las piezas del robot.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <p class="center-titulo">30</p>
+            </div>
+            <div class="col-sm-2 border border-secondary fondo-tabla center">
+              <img src="{% static 'imagenes/Logros/Vegan.webp' %}" alt="" class="imagen img-fluid">
+            </div>
+            <div class="col-sm-3 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Vegano</p>
+            </div>
+            <div class="col-sm-5 border border-secondary fondo-tabla center">
+              <p class="center-titulo">Juega todo el juego sin matar o comer animales.</p>
+            </div>
+          </div>
+          

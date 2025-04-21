@@ -1,0 +1,224 @@
+.
+├── README.md
+├── TheForestWiki_Semana5
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── core
+│   ├──  templatetags
+│   │   ├── __init__.py
+│   │   └── form_extras.py
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── migrations
+│   │   └── __init__.py
+│   ├── models.py
+│   ├── probar_conexion_oracle.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── estructura.txt
+├── libclntsh.dylib -> libclntsh.dylib.23.1
+├── libocci.dylib -> libocci.dylib.23.1
+├── manage.py
+├── oracle_wallet
+│   ├── BASIC_LICENSE
+│   ├── BASIC_README
+│   ├── INSTALL_IC_README.txt
+│   ├── README
+│   ├── SQLPLUS_LICENSE
+│   ├── SQLPLUS_README
+│   ├── adrci
+│   ├── ewallet.p12
+│   ├── ewallet.pem
+│   ├── fips.dylib
+│   ├── genezi
+│   ├── glogin.sql
+│   ├── install_ic.sh
+│   ├── keystore.jks
+│   ├── legacy.dylib
+│   ├── lib
+│   │   ├── libclntsh.dylib -> libclntsh.dylib.23.1
+│   │   ├── libclntsh.dylib.10.1 -> libclntsh.dylib.23.1
+│   │   ├── libclntsh.dylib.11.1 -> libclntsh.dylib.23.1
+│   │   ├── libclntsh.dylib.12.1 -> libclntsh.dylib.23.1
+│   │   ├── libclntsh.dylib.18.1 -> libclntsh.dylib.23.1
+│   │   ├── libclntsh.dylib.19.1 -> libclntsh.dylib.23.1
+│   │   ├── libclntsh.dylib.20.1 -> libclntsh.dylib.23.1
+│   │   ├── libclntsh.dylib.21.1 -> libclntsh.dylib.23.1
+│   │   ├── libclntsh.dylib.22.1 -> libclntsh.dylib.23.1
+│   │   ├── libclntsh.dylib.23.1
+│   │   ├── libclntshcore.dylib.23.1
+│   │   ├── libnnz.dylib
+│   │   ├── libocci.dylib -> libocci.dylib.23.1
+│   │   ├── libocci.dylib.10.1 -> libocci.dylib.23.1
+│   │   ├── libocci.dylib.11.1 -> libocci.dylib.23.1
+│   │   ├── libocci.dylib.12.1 -> libocci.dylib.23.1
+│   │   ├── libocci.dylib.18.1 -> libocci.dylib.23.1
+│   │   ├── libocci.dylib.19.1 -> libocci.dylib.23.1
+│   │   ├── libocci.dylib.20.1 -> libocci.dylib.23.1
+│   │   ├── libocci.dylib.21.1 -> libocci.dylib.23.1
+│   │   ├── libocci.dylib.22.1 -> libocci.dylib.23.1
+│   │   ├── libocci.dylib.23.1
+│   │   └── network
+│   ├── libclntshcore.dylib -> libclntshcore.dylib.23.1
+│   ├── libclntshcore.dylib.12.1 -> libclntshcore.dylib.23.1
+│   ├── libclntshcore.dylib.18.1 -> libclntshcore.dylib.23.1
+│   ├── libclntshcore.dylib.19.1 -> libclntshcore.dylib.23.1
+│   ├── libclntshcore.dylib.20.1 -> libclntshcore.dylib.23.1
+│   ├── libclntshcore.dylib.21.1 -> libclntshcore.dylib.23.1
+│   ├── libclntshcore.dylib.22.1 -> libclntshcore.dylib.23.1
+│   ├── libclntshcore.dylib.23.1
+│   ├── libnnz.dylib
+│   ├── libociei.dylib
+│   ├── libocijdbc23.dylib
+│   ├── libsqlplus.dylib
+│   ├── libsqlplusic.dylib
+│   ├── network
+│   │   └── admin
+│   ├── ojdbc.properties
+│   ├── ojdbc11.jar
+│   ├── ojdbc8.jar
+│   ├── pkcs11.dylib
+│   ├── sqlplus
+│   ├── truststore.jks
+│   ├── ucp.jar
+│   ├── uidrvci
+│   └── xstreams.jar
+├── run_oracle.sh
+├── static
+│   ├── css
+│   │   ├── Animales.css
+│   │   ├── Armas.css
+│   │   ├── Construcciones.css
+│   │   ├── Consumibles.css
+│   │   ├── Enemigos.css
+│   │   ├── Logros.css
+│   │   ├── estilo.css
+│   │   ├── flora.css
+│   │   ├── foro.css
+│   │   ├── historia.css
+│   │   ├── lugares.css
+│   │   ├── micuenta.css
+│   │   └── recuperarcontra.css
+│   ├── csslogin
+│   │   └── login.css
+│   ├── imagenes
+│   │   ├── Animales
+│   │   ├── Armas
+│   │   ├── Big chungus.jpg
+│   │   ├── Construcciones
+│   │   ├── Consumibles
+│   │   ├── Enemigos
+│   │   ├── Flora
+│   │   ├── Fondos
+│   │   ├── Historia
+│   │   ├── Icono
+│   │   └── Logros
+│   ├── img_lugares_wiki
+│   │   ├── Tierrasfertiles_1.png
+│   │   ├── arbolessagrados_1.jpg
+│   │   ├── areademontaña_1.jpg
+│   │   ├── cabina_1.png
+│   │   ├── campamentoabandonado_1.png
+│   │   ├── campamentodefilmacion_1.png
+│   │   ├── campamentodeplaya_1.png
+│   │   ├── campamentoestanque_1.jpg
+│   │   ├── contenedores de envio_1.png
+│   │   ├── cuartodealijo_1.jpg
+│   │   ├── elavion_1.png
+│   │   ├── estanquedepesca_1.jpg
+│   │   ├── helicoptero_1.png
+│   │   ├── islastf.jpg
+│   │   ├── labsahara_1.png
+│   │   ├── lagodelosgansos_1.png
+│   │   ├── lagodenieve_1.jpg
+│   │   ├── lugarparaacampar_1.jpg
+│   │   ├── obelisco_1.png
+│   │   ├── playastf.png
+│   │   ├── pueblocentraltf.jpg
+│   │   ├── pueblocostero_1.jpg
+│   │   ├── pueblodecabañasplaya_1.jpg
+│   │   ├── pueblodecocodrilos_1.jpg
+│   │   ├── pueblodelacascada_1.jpg
+│   │   ├── pueblojuntoallago_1.jpg
+│   │   ├── puebloprincipal_1.jpg
+│   │   ├── puebloribereño_1.jpg
+│   │   ├── pueblotf_1.jpg
+│   │   ├── puentetierra_1.png
+│   │   ├── puertadeboveda_1.jpg
+│   │   ├── puestodevigilancia_1.png
+│   │   ├── riotf.png
+│   │   ├── sumidero_1.png
+│   │   ├── tripulacioncongelada_1.jpg
+│   │   ├── tumbadelaplaya_1.jpg
+│   │   └── yate_1.jpg
+│   ├── img_wiki
+│   │   ├── 2.png
+│   │   ├── Fondo3.jpg
+│   │   ├── Storytf.png
+│   │   ├── TheforestPrueba1.png
+│   │   ├── animal2.png
+│   │   ├── armasthf1.png
+│   │   ├── buildings.png
+│   │   ├── consumibles.png
+│   │   ├── enemigosforest1.png
+│   │   ├── fondo_theforest.jpg
+│   │   ├── mapaforest1.png
+│   │   ├── plantaforest.png
+│   │   ├── user.png
+│   │   └── userforest.png
+│   └── js
+│       └── main.js
+├── templates
+│   └── core
+│       ├── Animales.html
+│       ├── Armas.html
+│       ├── Construcciones.html
+│       ├── Consumibles.html
+│       ├── Enemigos.html
+│       ├── Flora.html
+│       ├── Logros.html
+│       ├── Lugarestf.html
+│       ├── admin_visual.html
+│       ├── base.html
+│       ├── comentar.html
+│       ├── crear_tema.html
+│       ├── direccion.html
+│       ├── editar_perfil.html
+│       ├── forowiki.html
+│       ├── historia.html
+│       ├── inicio_sesion_wiki.html
+│       ├── menuprincipal_wiki.html
+│       ├── micuentatf.html
+│       ├── mis_temas.html
+│       ├── recuperarcontra.html
+│       ├── registrase_wiki.html
+│       ├── secciones.html
+│       ├── temas.html
+│       └── valorar.html
+├── venv
+│   ├── bin
+│   │   ├── Activate.ps1
+│   │   ├── activate
+│   │   ├── activate.csh
+│   │   ├── activate.fish
+│   │   ├── django-admin
+│   │   ├── pip
+│   │   ├── pip3
+│   │   ├── pip3.9
+│   │   ├── python -> python3
+│   │   ├── python3 -> /Applications/Xcode.app/Contents/Developer/usr/bin/python3
+│   │   ├── python3.9 -> python3
+│   │   └── sqlformat
+│   ├── include
+│   ├── lib
+│   │   └── python3.9
+│   └── pyvenv.cfg
+└── verificar_db.py
+
+34 directories, 188 files

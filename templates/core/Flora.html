@@ -1,0 +1,327 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="{% static 'imagenes/Icono/the-forest.icon.png' %}" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/flora.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  
+  <title>Flora - The Forest Wiki</title>
+</head>
+
+
+<!--js del clima-->
+<script src="{% static 'js/clima.js' %}"></script>
+
+<body class="bg-dark" id="fondo1">
+
+  <!-- Navbar con sesión integrada -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'menuprincipal' %}" id="fuente">The Forest Wiki</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="{% url 'menuprincipal' %}">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'foro' %}">Foro</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'historia' %}">Historia</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'logros' %}">Logros</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'direccion' %}">Dirección</a></li>
+
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link text-warning" href="{% url 'micuenta' %}">Mi Cuenta ({{ request.user.username }})</a>
+          </li>
+          {% if request.user.rol.nombre == 'Administrador' %}
+            <li class="nav-item">
+              <a class="nav-link text-info" href="{% url 'admin_visual' %}">Admin</a>
+            </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cerrar_sesion' %}">Cerrar sesión</a>
+          </li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'registrarse' %}">Registrarse</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a></li>
+        {% endif %}
+      </ul>
+
+      <!-- Formulario de búsqueda y clima -->
+      <form class="d-flex" id="separar-derecha">
+        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+
+         <!-- Clima dinámico -->
+         <div id="clima-widget" class="text-white" style="font-size: 0.9rem;">
+          <span id="clima-ciudad">🌤️ Clima:</span> <span id="clima">Cargando...</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="container">
+    <section class="color2 letra">
+      <div class="center1 mt-4">
+        <h1 id="titulo1">Flora</h1>
+      </div>
+
+      {% if request.user.is_authenticated and request.user.rol.nombre == 'Administrador' %}
+        <div class="w-33 text-center">
+          <button class="btn btn-dark mt-3">Editar</button>
+        </div>
+      {% endif %}
+
+      <p id="caja_descAnimales" class="mt-4">
+        Flora se refiere a las diversas plantas y hongos que se pueden encontrar en El Bosque. Algunas especies se encuentran en la Guía de Naturaleza. Se dividen entre vegetación genérica y plantas de consumo (comestibles, medicinales y venenosas).
+      </p>
+
+      <!-- Slider -->
+      <div class="container-slider mt-4">
+        <div class="slider" id="slider">
+          <div class="slider__section"><img src="{% static 'imagenes/Flora/flora 11.jpg' %}" class="slider__img"></div>
+          <div class="slider__section"><img src="{% static 'imagenes/Flora/flora2.png' %}" class="slider__img"></div>
+          <div class="slider__section"><img src="{% static 'imagenes/Flora/flora 3.jpg' %}" class="slider__img"></div>
+          <div class="slider__section"><img src="{% static 'imagenes/Flora/flora 5.jpg' %}" class="slider__img"></div>
+        </div>
+        <div class="slidr__btn slider__btn--right" id="btn-right">&#60;</div>
+        <div class="slidr__btn slider__btn--left" id="btn-left">&#62;</div>
+      </div>
+
+      <!-- Aquí iría la tabla de flores completa que ya tienes -->
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer id="piedepag" class="bg-dark text-white text-center py-3 mt-5">
+    <p>Chile, Santiago de Chile | Fono: 227369936 | Email: tfwiki@gmail.com</p>
+    <p>&copy; 2022 Wiki <span style="color: #ffc400;">THE FOREST WIKI</span></p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="{% static 'js/slider.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+  
+
+      </form>
+    </div>
+  </nav>
+  
+  <body id="fondo1">
+    <div class="container">
+      <section class="color2 letra">
+        <div class="center1">
+          <h1 id="titulo1">Flora</h1>
+        </div>
+
+        {% if request.user.is_authenticated and request.user.rol.nombre == 'Administrador' %}
+        <div class="w-33">
+          <div class="center">
+            <button class="btn btn-dark">Editar</button>
+          </div>
+        </div>
+        {% endif %}
+
+        <p id="caja_descAnimales">
+          Flora se refiere a las diversas plantas y hongos que se pueden encontrar en El Bosque.
+          Algunas especies se pueden encontrar en la Guía de Naturaleza en las secciones de Flora.
+          Las plantas se dividen en dos grupos: la vegetación genérica, que está formada por la flora general
+          que se encuentra en la Península, y las plantas de consumo, que son las comestibles, medicinales
+          y organismos venenosos que crecen en el medio ambiente.
+        </p>
+
+        <!-- Slideshow container -->
+        <div class="container-slider">
+          <div class="slider" id="slider">
+            <div class="slider__section">
+              <img src="{% static 'imagenes/Flora/flora 11.jpg' %}" alt="" class="slider__img">
+            </div>
+            <div class="slider__section">
+              <img src="{% static 'imagenes/Flora/flora2.png' %}" alt="" class="slider__img">
+            </div>
+            <div class="slider__section">
+              <img src="{% static 'imagenes/Flora/flora 3.jpg' %}" alt="" class="slider__img">
+            </div>
+            <div class="slider__section">
+              <img src="{% static 'imagenes/Flora/flora 5.jpg' %}" alt="" class="slider__img">
+            </div>
+          </div>
+          <div class="slidr__btn slider__btn--right" id="btn-right">&#60;</div>
+          <div class="slidr__btn slider__btn--left" id="btn-left">&#62;</div>
+        </div>
+                <!--Tablas Flora -->
+                <div style="overflow-x:auto">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col-md-3">flores</th>
+                        <th scope="col-md-3">Imagen</th>
+                        <th scope="col-md-3">Venenosas/Curativas</th>
+                        <th scope="col-md-3">Descripción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td><img src="{% static 'imagenes/Flora/f1.png' %}"></td>
+                        <td>Curativas (Sed/Hambre)</td>
+                        <td>
+                          Las moras se pueden encontrar por toda la península. Son uno de los alimentos más útiles,
+                          ya que proporcionan hidratación, saciedad y energía, al igual que los arándanos. Solo aportan 1
+                          caloría cada uno. No se estropean, lo que los hace útiles para explorar las profundidades de las
+                          cuevas. Crecen en un arbusto con pocas hojas que se asemeja a una colección de enredaderas colgantes de color
+                          marrón espinoso. No se pueden utilizar en guisos. No hay semillas para las moras, por lo tanto,
+                          no se pueden cultivar en un jardín o en una maceta de pared.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td><img src="{% static 'imagenes/Flora/f2.png' %}"></td>
+                        <td>Curativas</td>
+                        <td>
+                          Los arándanos se pueden recolectar de los arbustos de arándanos, que se pueden encontrar por toda la
+                          isla. Proporcionan hidratación, saciedad y energía. No se estropean, lo que los hace útiles para
+                          explorar cuevas. Al recolectarlos, el jugador puede obtener semillas para plantarlos.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td><img src="{% static 'imagenes/Flora/f3.png' %}"></td>
+                        <td>Venenosas</td>
+                        <td>
+                          Las bayas de nieve son venenosas y dañarán la salud del jugador al consumirlas. No proporcionan
+                          hidratación ni se pueden usar en guisos. Tienen apariencia similar a los arbustos de arándanos,
+                          pero con bayas blancas.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">4</th>
+                        <td><img src="{% static 'imagenes/Flora/f4.png' %}"></td>
+                        <td>Venenosas</td>
+                        <td>
+                          Las twinberries son dos bayas oscuras rodeadas por una flor en forma de estrella de color naranja rojizo.
+                          Son venenosas y dañan al jugador si se consumen. No proporcionan hidratación ni se usan en guisos.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">5</th>
+                        <td><img src="{% static 'imagenes/Flora/f5.png' %}"></td>
+                        <td>Curativas</td>
+                        <td>
+                          El aloe no tiene tallo y tiene hojas carnosas. Sirve para elaborar medicinas y se puede comer para
+                          curar enfermedades y recuperar hambre. Puede encontrarse en el suelo del bosque. Algunas veces
+                          otorga semillas para plantar.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">6</th>
+                        <td><img src="{% static 'imagenes/Flora/f6.png' %}"></td>
+                        <td>Curativas</td>
+                        <td>
+                          La achicoria tiene flores azul claro y aparece en grupos. Se puede usar para crear mezclas energéticas.
+                          Al comerla sola, recupera energía. Solo se pueden llevar 10 en el inventario.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">7</th>
+                        <td><img src="{% static 'imagenes/Flora/f7.png' %}"></td>
+                        <td>Curativas</td>
+                        <td>
+                          La equinácea tiene pétalos blancos y un centro anaranjado. Sirve para elaborar mezclas y recuperar
+                          salud. Puede otorgar semillas. Solo se pueden llevar 10 unidades.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">8</th>
+                        <td><img src="{% static 'imagenes/Flora/f8.png' %}"></td>
+                        <td>Curativas</td>
+                        <td>
+                          La caléndula tiene flores naranjas y se encuentra por casi toda la península. Se puede comer para
+                          reponer hambre o usar en medicinas. No aparece en zonas nevadas. Se pueden llevar hasta 10.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">9</th>
+                        <td><img src="{% static 'imagenes/Flora/f9.png' %}"></td>
+                        <td>Curativas</td>
+                        <td>
+                          Se pueden comer para recuperar hambre y energía. No se echan a perder y se pueden almacenar,
+                          usar en manualidades o plantar en jardines (solo en cuevas). No se reproducen en forma natural.
+                          Se recolectan con la bolsa (hasta 10).
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">10</th>
+                        <td><img src="{% static 'imagenes/Flora/f10.png' %}"></td>
+                        <td>Curativas</td>
+                        <td>
+                          Igual que los anteriores, los hongos rebozuelos se recolectan con bolsa. No se descomponen
+                          y sirven para alimentación, artesanía o cultivo en cuevas. Se pueden guardar hasta 10 unidades.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">11</th>
+                        <td><img src="{% static 'imagenes/Flora/f11.png' %}"></td>
+                        <td>Curativas</td>
+                        <td>
+                          Hongos ciervos: se comportan como los anteriores. Reponen hambre y energía. No se pueden plantar
+                          en maceteros de pared. Se requieren cuevas para cultivo.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">12</th>
+                        <td><img src="{% static 'imagenes/Flora/f12.png' %}"></td>
+                        <td>Curativas</td>
+                        <td>
+                          Los Jack Mushrooms restauran energía y hambre. Pueden usarse más tarde, al no descomponerse.
+                          Se almacenan hasta 10 con la bolsa. Sólo crecen en cuevas.
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">13</th>
+                        <td><img src="{% static 'imagenes/Flora/f13.png' %}"></td>
+                        <td>Curativas</td>
+                        <td>
+                          Los hongos hojaldrados funcionan igual que los demás: recolectables, no perecibles,
+                          útiles para alimentación o manualidades. Se recolectan con bolsa, máximo 10.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+                <!-- Footer -->
+    <footer id="piedepag">
+      <p>Chile, Santiago de Chile | Fono: 227369936 | Email: tfwiki@gmail.com</p>
+      <p>Copyright 2022 Wiki <span style="color: #ffc400;">THE FOREST WIKI</span></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/slider.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+  </body>
+</html>
